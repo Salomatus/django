@@ -4,19 +4,17 @@ from django.db import models
 class Category(models.Model):
     name = models.CharField(
         max_length=100,
-        verbose_name="Наименование производителя",
-        help_text="Укажите производителя",
+        verbose_name="Наименование",
+        help_text="Укажите наименование",
     )
     description = models.TextField(
-        verbose_name="Описание производителя",
-        help_text="Укажите описание производителя",
-        blank=True,
-        null=True,
+        verbose_name="Описание",
+        help_text="Описание",
     )
 
     class Meta:
-        verbose_name = "Производитель"
-        verbose_name_plural = "Производители"
+        verbose_name = "Категория"
+        verbose_name_plural = "Категории"
 
     def __str__(self):
         return self.name
@@ -25,17 +23,18 @@ class Category(models.Model):
 class Product(models.Model):
     name = models.CharField(
         max_length=100,
-        verbose_name="Наименование модели",
+        verbose_name="Модель",
         help_text="Укажите модель",
     )
+
     category = models.ForeignKey(
         Category,
         on_delete=models.SET_NULL,
-        verbose_name="Производитель",
-        help_text="Укажите производителя",
+        verbose_name="Категория",
+        help_text="Продукт",
         blank=True,
         null=True,
-        related_name="catalog",
+        related_name="products",
     )
     foto = models.ImageField(
         upload_to="catalog/foto",
@@ -59,8 +58,8 @@ class Product(models.Model):
     )
 
     class Meta:
-        verbose_name = "Модель"
-        verbose_name_plural = "Модели"
+        verbose_name = "Продукт"
+        verbose_name_plural = "Продукты"
         ordering = ["category", "name"]
 
     def __str__(self):

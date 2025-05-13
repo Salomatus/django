@@ -3,53 +3,56 @@ from django.db import models
 
 class Category(models.Model):
     name = models.CharField(
-        max_length=100,
-        verbose_name="Наименование производителя",
-        help_text="Укажите производителя",
+        max_length=150,
+        verbose_name="Наименование",
+        help_text="Укажите наименование",
     )
-    description = models.TextField(
-        verbose_name="Описание производителя",
-        help_text="Укажите описание производителя",
-        blank=True,
-        null=True,
+    description = models.CharField(
+        max_length=150,
+        verbose_name="Описание",
+        help_text="Описание",
     )
 
     class Meta:
-        verbose_name = "Производитель"
-        verbose_name_plural = "Производители"
+        verbose_name = "Категория"
+        verbose_name_plural = "Категории"
 
     def __str__(self):
-        return self.name
+        return f"{self.name} {self.description}"
 
 
 class Product(models.Model):
     name = models.CharField(
-        max_length=100,
-        verbose_name="Наименование модели",
+        max_length=150,
+        verbose_name="Модель",
         help_text="Укажите модель",
     )
+
     category = models.ForeignKey(
         Category,
         on_delete=models.SET_NULL,
-        verbose_name="Производитель",
-        help_text="Укажите производителя",
+        verbose_name="Категория",
+        help_text="Продукт",
         blank=True,
         null=True,
-        related_name="catalog",
+        related_name="products",
     )
+
     foto = models.ImageField(
-        upload_to="catalog/foto",
+        upload_to="blog/foto",
         blank=True,
         null=True,
         verbose_name="Фото",
         help_text="Загрузите фото",
     )
+
     date = models.DateField(
         verbose_name="Дата выпуска",
         help_text="Укажите дату выпуска",
         blank=True,
         null=True,
     )
+
     price = models.DecimalField(
         max_digits=10, decimal_places=2, verbose_name="Стоимость"
     )
@@ -59,9 +62,9 @@ class Product(models.Model):
     )
 
     class Meta:
-        verbose_name = "Модель"
-        verbose_name_plural = "Модели"
-        ordering = ["category", "name"]
+        verbose_name = "продукт"
+        verbose_name_plural = "продукты"
+        ordering = ["name"]
 
     def __str__(self):
         return self.name

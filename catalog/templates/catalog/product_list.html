@@ -19,6 +19,10 @@
                     </ul>
                     <div class="btn-group">
                         <a class="btn btn-primary" href="{% url 'catalog:product_detail' product.pk %}" role="button">Перейти</a>
+                        <a class="btn btn-primary" href="{% url 'catalog:product_update' product.pk %}" role="button">
+                         Редактировать</a>
+                         <a class="btn btn-primary" href="{% url 'catalog:product_delete' product.pk %}" role="button">
+                         Удалить</a>
                     </div>
                 </div>
             </div>

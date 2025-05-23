@@ -1,15 +1,12 @@
+<!DOCTYPE html>
 {% load static %}
-<!doctype html>
-
-
-<html lang="en" data-bs-theme="auto">
-  <head>
+<html lang="en">
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.145.0">
-    <title>Album example · Bootstrap v5.3</title>
+    <title>{% block title %}Бродяга{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+</head>
 
     <script type="text/javascript" nonce="a8ecb0a859644b91961d312fbb2" src="//local.adguard.org?ts=1745204601530&amp;type=content-script&amp;dmn=getbootstrap.com&amp;url=https%3A%2F%2Fgetbootstrap.com%2Fdocs%2F5.3%2Fexamples%2Falbum%2F&amp;app=browser.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1&amp;stealth=1&amp;st-dnt"></script>
 <script type="text/javascript" nonce="a8ecb0a859644b91961d312fbb2" src="//local.adguard.org?ts=1745204601530&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/album/">
@@ -109,10 +106,9 @@
         display: block !important;
       }
     </style>
+</head>
 
-
-  </head>
-  <body>
+<body>
     <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
   <symbol id="check2" viewBox="0 0 16 16">
     <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
@@ -179,25 +175,20 @@
       <div class="col-lg-6 col-md-8 mx-auto">
         <h1 class="fw-light">Магазин</h1>
         <p class="lead text-body-secondary">"Бродяга"</p>
-        <p>
-          <a href="#" class="btn btn-primary my-2">Main call to action</a>
-          <a href="#" class="btn btn-secondary my-2">Secondary action</a>
-        </p>
+          <a class="btn btn-primary" href="{% url 'catalog:product_create' %}" role="button">Добавить модель</a>
       </div>
     </div>
   </section>
 
   {% block content %}
   {% endblock %}
-</main>
 
+</main>
 <footer class="text-body-secondary py-5">
   <div class="container">
     <p class="float-end mb-1">
       <a href="#">Back to top</a>
     </p>
-    <p class="mb-1">Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
-    <p class="mb-0">New to Bootstrap? <a href="/">Visit the homepage</a> or read our <a href="/docs/5.3/getting-started/introduction/">getting started guide</a>.</p>
   </div>
 </footer>
 <script defer src="{% static 'js/bootstrap.bundle.min.js' %}"></script>

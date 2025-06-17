@@ -27,6 +27,11 @@ class Product(models.Model):
         verbose_name="Модель",
         help_text="Укажите модель",
     )
+    description = models.CharField(
+        max_length=150,
+        verbose_name="Описание продукта",
+        help_text="Введите описание продукта",
+    )
 
     category = models.ForeignKey(
         Category,
@@ -56,6 +61,7 @@ class Product(models.Model):
     price = models.DecimalField(
         max_digits=10, decimal_places=2, verbose_name="Стоимость"
     )
+
     created_at = models.DateField(verbose_name="Дата создания", auto_now_add=True)
     updated_at = models.DateField(
         verbose_name="Дата последнего изменения", auto_now=True
@@ -65,6 +71,10 @@ class Product(models.Model):
         verbose_name = "продукт"
         verbose_name_plural = "продукты"
         ordering = ["name"]
+        permissions = [
+            ("can_view", "Может просматривать продукты"),
+            ("can_description", "Может создавать продукты"),
+        ]
 
     def __str__(self):
         return self.name

@@ -1,3 +1,4 @@
+import catalog.forms
 from catalog.models import Product
 
 from django.views.generic import (
@@ -9,8 +10,8 @@ from django.views.generic import (
 )
 from django.urls import reverse_lazy, reverse
 
-from catalog.forms import ProductForm
-
+from catalog.forms import ProductForm, ProductModeratorForm
+from django.core.exceptions import PermissionDenied
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from django.http import HttpResponseForbidden
@@ -22,8 +23,16 @@ class ProductListView(ListView):
     model = Product
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(DetailView, LoginRequiredMixin):
     model = Product
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        if self.request.user == self.object.owner:
+            self.object.view_count += 1
+            self.object.save()
+            return self.object
+        raise PermissionDenied
 
 
 class ProductCreateView(CreateView):
@@ -88,7 +97,16 @@ class ProductDeleteView(DeleteView):
 
             return redirect("catalog:product", pk=product.id)
 
+        def get_form_class(self):
+            user = self.request.user
+            if user == self.get_object().owner:
+                return ProductForm
+            if user.has_perm("catalog.can_view") and user.has_perm("catalog.can_description"):
+                return ProductModeratorForm
+            raise PermissionDenied("У вас нет прав на редактирование этого продукта.")
+
+
     class ProductCategoryListView(ListView):
         model = Product
-        template_name = "catalog/products_list_by_category.html"
+        template_name = "catalog/products_list.html"
         context_object_name = "category"

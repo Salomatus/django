@@ -18,9 +18,12 @@
                         <li class="text-center">{{ product.description|truncatechars:100}}</li>
                     </ul>
                     <div class="btn-group">
-                        <a class="btn btn-primary" href="{% url 'catalog:product_detail' product.pk %}" role="button">Перейти</a>
+                        {% if perms.catalog.can_edit_product and catalog.can_description_product or user == product.owner %}
                         <a class="btn btn-primary" href="{% url 'catalog:product_update' product.pk %}" role="button">
                          Редактировать</a>
+                        {% endif %}
+                        <a class="btn btn-primary" href="{% url 'catalog:product_detail' product.pk %}"
+                           role="button">Посмотреть</a>
                          <a class="btn btn-primary" href="{% url 'catalog:product_delete' product.pk %}" role="button">
                          Удалить</a>
                     </div>

@@ -8,6 +8,7 @@ from django.core.mail import send_mail
 from config.settings import EMAIL_HOST_USER
 from django.urls import reverse
 
+
 class UserCreateView(CreateView):
 
     model = User
@@ -23,12 +24,14 @@ class UserCreateView(CreateView):
         user.save()
         host = self.request.get_host()
         url = f"http://{host()}/users/email-confirm/{token}/"
-        send_mail(subject="Подтвердите свой email",
-                  message=f"Перейти по ссылке для подтверждения почты: {url}",
-                  from_email=EMAIL_HOST_USER,
-                  recipient_list=[user.email]
+        send_mail(
+            subject="Подтвердите свой email",
+            message=f"Перейти по ссылке для подтверждения почты: {url}",
+            from_email=EMAIL_HOST_USER,
+            recipient_list=[user.email],
         )
         return super().form_valid(form)
+
 
 def email_verification(request, token):
 

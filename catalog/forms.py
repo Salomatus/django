@@ -24,11 +24,11 @@ class ProductForm(ModelForm):
         model = Product
         exclude = ("created_at", "updated_at", "owner")
 
+
 class ProductModeratorForm(ModelForm):
     class Meta:
         model = Product
         fields = ("description", "category")
-
 
     def __init__(self, *args, **kwargs):
         super(ProductForm, self).__init__(*args, **kwargs)

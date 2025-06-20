@@ -101,12 +101,13 @@ class ProductDeleteView(DeleteView):
             user = self.request.user
             if user == self.get_object().owner:
                 return ProductForm
-            if user.has_perm("catalog.can_view") and user.has_perm("catalog.can_description"):
+            if user.has_perm("catalog.can_view") and user.has_perm(
+                "catalog.can_description"
+            ):
                 return ProductModeratorForm
             raise PermissionDenied("У вас нет прав на редактирование этого продукта.")
 
-
     class ProductCategoryListView(ListView):
         model = Product
-        template_name = "catalog/products_list.html"
+        template_name = "catalog/products_list_by_category.html"
         context_object_name = "category"

@@ -31,6 +31,7 @@ pycodestyle==2.13.0
 pyflakes==3.3.2
 Pygments==2.19.1
 python-dotenv==1.0.1
+redis==6.2.0
 reverse==0.1.0
 self==2020.12.3
 sqlparse==0.5.3

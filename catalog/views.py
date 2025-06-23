@@ -1,4 +1,5 @@
 import catalog.forms
+import catalog.services
 from catalog.models import Product
 
 from django.views.generic import (
@@ -17,11 +18,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.http import HttpResponseForbidden
 
 from django.shortcuts import get_object_or_404, redirect
+from catalog.services import get_catalog_from_cache
 
 
 class ProductListView(ListView):
     model = Product
 
+def get_queryset(self):
+    return get_catalog_from_cache()
 
 class ProductDetailView(DetailView, LoginRequiredMixin):
     model = Product
